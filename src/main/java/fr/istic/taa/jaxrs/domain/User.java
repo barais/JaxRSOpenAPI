@@ -1,13 +1,17 @@
 package fr.istic.taa.jaxrs.domain;
 
 import javax.persistence.Entity;
+import java.util.List;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class User {
 
     private long id;
     private String nom;
+    private List<Ticket> TicketsCrees;
 
     @Id
     public long getId() {
@@ -24,6 +28,15 @@ public class User {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    @OneToMany
+    public List<Ticket> getTicketsCrees() {
+        return this.TicketsCrees;
+    }
+
+    public void setTicketsCrees(List<Ticket> TicketsCrees) {
+        this.TicketsCrees = TicketsCrees;
     }
     
 
