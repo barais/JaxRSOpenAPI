@@ -1,4 +1,7 @@
 package fr.istic.taa.jaxrs.dao.impl;
 
-public class TicketDao {
+import fr.istic.taa.jaxrs.dao.generic.AbstractJpaDao;
+import fr.istic.taa.jaxrs.domain.Ticket;
+
+public class TicketDao extends AbstractJpaDao<Long, Ticket> {
 }

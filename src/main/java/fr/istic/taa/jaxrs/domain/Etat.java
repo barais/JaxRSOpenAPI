@@ -2,16 +2,16 @@ package fr.istic.taa.jaxrs.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Tag implements Serializable {
+public class Etat implements Serializable {
     private long id;
     private String libelle;
     private List<Ticket> tickets;
+
     @Id
     public long getId() {
         return id;
@@ -29,7 +29,6 @@ public class Tag implements Serializable {
         this.libelle = libelle;
     }
 
-    @ManyToMany
     public List<Ticket> getTickets() {
         return tickets;
     }
@@ -42,8 +41,8 @@ public class Tag implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tag tag = (Tag) o;
-        return id == tag.id && Objects.equals(libelle, tag.libelle) && Objects.equals(tickets, tag.tickets);
+        Etat etat = (Etat) o;
+        return id == etat.id && Objects.equals(libelle, etat.libelle) && Objects.equals(tickets, etat.tickets);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "Tag{" +
+        return "Etat{" +
                 "id=" + id +
                 ", libelle='" + libelle + '\'' +
                 ", tickets=" + tickets +
