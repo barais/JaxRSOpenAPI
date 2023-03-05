@@ -33,6 +33,7 @@ public class TicketService {
             Ticket update = ticketDao.findOne(id);
             update.setEtat(ticket.getEtat());
             update.setTexte(ticket.getTexte());
+            ticketDao.update(update);
         }
     }
 }
