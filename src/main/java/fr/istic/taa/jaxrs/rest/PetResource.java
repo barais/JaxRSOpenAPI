@@ -11,6 +11,9 @@ import javax.ws.rs.core.Response;
 import fr.istic.taa.jaxrs.domain.Pet;
 import io.swagger.v3.oas.annotations.Parameter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Path("/pet")
 @Produces({"application/json", "application/xml"})
 public class PetResource {
@@ -20,6 +23,18 @@ public class PetResource {
   public Pet getPetById(@PathParam("petId") Long petId)  {
       // return pet
       return new Pet();
+  }
+  @GET
+  @Path("/")
+  public List<Pet> getPets()  {
+    // return pet
+    List<Pet> pets = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      Pet pet = new Pet();
+      pet.setId(i);
+      pets.add(pet);
+    }
+    return pets;
   }
 
   @POST

@@ -2,6 +2,7 @@ package fr.istic.taa.jaxrs.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class Etat implements Serializable {
         this.libelle = libelle;
     }
 
+    @OneToMany
     public List<Ticket> getTickets() {
         return tickets;
     }

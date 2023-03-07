@@ -1,5 +1,10 @@
 package fr.istic.taa.jaxrs.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -46,6 +51,8 @@ public class Ticket implements Serializable {
     }
 
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     public LocalDate getDateCreation() {
         return dateCreation;
     }
@@ -72,7 +79,7 @@ public class Ticket implements Serializable {
         this.tags = tags;
     }
 
-    @ManyToOne
+    @OneToMany
     public List<Commentaire> getCommentaires() {
         return commentaires;
     }

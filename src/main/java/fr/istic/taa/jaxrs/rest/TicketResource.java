@@ -1,24 +1,52 @@
 package fr.istic.taa.jaxrs.rest;
 
+import fr.istic.taa.jaxrs.dao.impl.TicketDao;
+import fr.istic.taa.jaxrs.domain.Tag;
 import fr.istic.taa.jaxrs.domain.Ticket;
+import fr.istic.taa.jaxrs.domain.User;
+import fr.istic.taa.jaxrs.dto.TicketDto;
 import fr.istic.taa.jaxrs.service.TicketService;
+import io.swagger.v3.oas.annotations.Parameter;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.util.List;
 
-@Path("/ticket")
-@Produces({"application/json", "application/xml"})
+@Path("/tickets")
+@Produces({"application/json"})
 public class TicketResource {
-    private final TicketService service;
+    TicketService service = new TicketService();
 
     public TicketResource() {
-        this.service = new TicketService();
     }
     @GET
     @Path("/{id}")
-    private Ticket getTicket(@PathParam("id") Long id){
+    public TicketDto getTicket(@PathParam("id") Long id){
         return service.getTicket(id);
+    }
+    @GET
+    @Path("/")
+    public List<TicketDto> getList(){
+        return service.getTickets();
+    }
+
+    @POST
+    @Consumes("application/json")
+    public void createTicket(Ticket ticket){
+        service.addTicket(ticket);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteTicket(@PathParam("id")Long id){
+        service.removeTicket(id);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes("application/json")
+    public void updateTicket(@PathParam("id")Long id, Ticket ticket){
+        service.updateTicket(id,ticket);
     }
 }

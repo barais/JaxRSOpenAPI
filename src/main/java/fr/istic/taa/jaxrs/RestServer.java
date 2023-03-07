@@ -1,8 +1,11 @@
 package fr.istic.taa.jaxrs;
 
+import fr.istic.taa.jaxrs.dao.generic.EntityManagerHelper;
 import io.undertow.Undertow;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.logging.Logger;
 
 /**
@@ -15,10 +18,28 @@ public class RestServer {
 
     public static void main( String[] args ) {
 
+
         UndertowJaxrsServer ut = new UndertowJaxrsServer();
 
         TestApplication ta = new TestApplication();
 
+        /*EntityManager manager = EntityManagerHelper.getEntityManager();
+        EntityTransaction tx = manager.getTransaction();
+        tx.begin();
+
+
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tx.commit();
+
+
+        manager.close();
+        EntityManagerHelper.closeEntityManagerFactory();
+
+         */
         ut.deploy(ta);
 
         ut.start(
