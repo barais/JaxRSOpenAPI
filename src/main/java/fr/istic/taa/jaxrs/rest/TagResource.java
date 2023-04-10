@@ -1,7 +1,6 @@
 package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.domain.Tag;
-import fr.istic.taa.jaxrs.dto.TagDto;
 import fr.istic.taa.jaxrs.service.TagService;
 
 import javax.ws.rs.*;
@@ -16,12 +15,12 @@ public class TagResource {
     }
     @GET
     @Path("/{id}")
-    public TagDto getTag(@PathParam("id") Long id){
+    public Tag getTag(@PathParam("id") Long id){
         return service.getTag(id);
     }
     @GET
     @Path("/")
-    public List<TagDto> getList(){
+    public List<Tag> getList(){
         return service.getTags();
     }
 

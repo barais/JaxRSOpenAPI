@@ -1,7 +1,6 @@
 package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.domain.Etat;
-import fr.istic.taa.jaxrs.dto.EtatDto;
 import fr.istic.taa.jaxrs.service.EtatService;
 
 import javax.ws.rs.*;
@@ -16,12 +15,12 @@ public class EtatResource {
     }
     @GET
     @Path("/{id}")
-    public EtatDto getEtat(@PathParam("id") Long id){
+    public Etat getEtat(@PathParam("id") Long id){
         return service.getEtat(id);
     }
     @GET
     @Path("/")
-    public List<EtatDto> getList(){
+    public List<Etat> getList(){
         return service.getEtats();
     }
 

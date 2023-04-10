@@ -1,0 +1,10 @@
+package fr.istic.taa.jaxrs.dao.impl;
+
+import fr.istic.taa.jaxrs.dao.generic.AbstractJpaDao;
+import fr.istic.taa.jaxrs.domain.User;
+
+public class UserDao extends AbstractJpaDao<Long, User> {
+    public UserDao() {
+        this.setClazz(User.class);
+    }
+}

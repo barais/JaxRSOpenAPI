@@ -1,16 +1,11 @@
 package fr.istic.taa.jaxrs.rest;
 
-import fr.istic.taa.jaxrs.dao.impl.TicketDao;
-import fr.istic.taa.jaxrs.domain.Tag;
+
 import fr.istic.taa.jaxrs.domain.Ticket;
-import fr.istic.taa.jaxrs.domain.User;
-import fr.istic.taa.jaxrs.dto.TicketDto;
 import fr.istic.taa.jaxrs.service.TicketService;
-import io.swagger.v3.oas.annotations.Parameter;
+
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
-import java.time.LocalDate;
 import java.util.List;
 
 @Path("/tickets")
@@ -22,12 +17,12 @@ public class TicketResource {
     }
     @GET
     @Path("/{id}")
-    public TicketDto getTicket(@PathParam("id") Long id){
+    public Ticket getTicket(@PathParam("id") Long id){
         return service.getTicket(id);
     }
     @GET
     @Path("/")
-    public List<TicketDto> getList(){
+    public List<Ticket> getList(){
         return service.getTickets();
     }
 

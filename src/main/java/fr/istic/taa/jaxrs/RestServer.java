@@ -26,19 +26,14 @@ public class RestServer {
         /*EntityManager manager = EntityManagerHelper.getEntityManager();
         EntityTransaction tx = manager.getTransaction();
         tx.begin();
-
-
         try {
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         tx.commit();
-
-
         manager.close();
         EntityManagerHelper.closeEntityManagerFactory();
-
          */
         ut.deploy(ta);
 

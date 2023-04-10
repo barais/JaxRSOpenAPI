@@ -1,13 +1,14 @@
 package fr.istic.taa.jaxrs.domain;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 
 @Entity
-public class User {
+public class User implements Serializable {
 
     private long id;
     private String nom;
@@ -38,7 +39,6 @@ public class User {
     public void setTicketsCrees(List<Ticket> TicketsCrees) {
         this.TicketsCrees = TicketsCrees;
     }
+
     
-
-
 }

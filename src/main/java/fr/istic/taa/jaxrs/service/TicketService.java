@@ -2,9 +2,7 @@ package fr.istic.taa.jaxrs.service;
 
 import fr.istic.taa.jaxrs.dao.impl.TicketDao;
 import fr.istic.taa.jaxrs.domain.Ticket;
-import fr.istic.taa.jaxrs.dto.TicketDto;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,17 +12,12 @@ public class TicketService {
 
     public TicketService() {
     }
-    public TicketDto getTicket(Long id){
+    public Ticket getTicket(Long id){
         Ticket ticket = ticketDao.findOne(id);
-        return new TicketDto(ticket.getTexte(),ticket.getAuteur().getNom(),ticket.getEtat().getLibelle(),ticket.getDateCreation());
+        return ticketDao.findOne(id);
     }
-    public List<TicketDto> getTickets(){
-        List<TicketDto> tickets = new ArrayList<>();
-        for(Ticket ticket:ticketDao.findAll()){
-            TicketDto ticketDto = new TicketDto(ticket.getTexte(),ticket.getAuteur().getNom(),ticket.getEtat().getLibelle(),ticket.getDateCreation());
-            tickets.add(ticketDto);
-        }
-        return tickets;
+    public List<Ticket> getTickets(){
+        return ticketDao.findAll();
     }
     public void addTicket(Ticket ticket){
         ticketDao.save(ticket);
