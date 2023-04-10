@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7251387e-aebe-4a64-83b9-a1e691714a01" name="Changes" comment="Pull de William" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="william-work" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/fr/istic/taa/jaxrs/RestServer.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="2MBRI1esXS0vJWhxPDnrCuxyRag" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/William/IdeaProjects/tpticketback&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="fr.istic.taa.jaxrs.domain" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\William\IdeaProjects\tpticketback" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.RestServer">
+    <configuration name="JpaTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="fr.istic.taa.jaxrs.JpaTest" />
+      <module name="jaxrs-example" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fr.istic.taa.jaxrs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RestServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="fr.istic.taa.jaxrs.RestServer" />
+      <module name="jaxrs-example" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="fr.istic.taa.jaxrs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="run-hsqldb-server" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+      <module name="jaxrs-example" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="run-hsqldb-server.bat" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="show-hsqldb" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+      <module name="jaxrs-example" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="show-hsqldb.bat" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="tpticketback" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="tpticketback" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Batch.show-hsqldb" />
+        <item itemvalue="Batch.run-hsqldb-server" />
+        <item itemvalue="Application.RestServer" />
+        <item itemvalue="Application.JpaTest" />
+        <item itemvalue="Application.RestServer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7251387e-aebe-4a64-83b9-a1e691714a01" name="Changes" comment="" />
+      <created>1677238907261</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677238907261</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Création des classes Ticket, Tag et Commentaire">
+      <created>1677324415430</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677324415431</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Création des services, dto et implémentations des dao">
+      <created>1677326520632</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677326520632</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Création de l'entité Etat pour définir l'état d'un ticket.&#10;Création et implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat.">
+      <created>1677712232385</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677712232385</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat.">
+      <created>1678060655740</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1678060655740</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat. (Fin)">
+      <created>1678177596738</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1678177596738</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat. (Fin)">
+      <created>1681134349836</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681134349836</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat. (Fin)">
+      <created>1681134426760</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681134426760</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Pull de William">
+      <created>1681134532774</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681134532774</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Création des classes Ticket, Tag et Commentaire" />
+    <MESSAGE value="Création des services, dto et implémentations des dao" />
+    <MESSAGE value="Création de l'entité Etat pour définir l'état d'un ticket.&#10;Création et implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat." />
+    <MESSAGE value="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat." />
+    <MESSAGE value="Implémentation des services, dao et ressources (contrôleurs) des entités Ticket, Tag et Etat. (Fin)" />
+    <MESSAGE value="Pull de William" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pull de William" />
+  </component>
+</project>
