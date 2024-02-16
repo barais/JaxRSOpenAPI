@@ -4,17 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.v3.oas.models.tags.Tag;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @XmlRootElement(name = "Pet")
 public class Pet {
+  @Id
+  @GeneratedValue
+  @XmlAttribute
   private long id;
-  private String name;
-  private List<Tag> tags = new ArrayList<Tag>();
+  @XmlAttribute
 
-  @XmlElement(name = "id")
+  private String name;
+
   public long getId() {
     return id;
   }
@@ -23,22 +31,11 @@ public class Pet {
     this.id = id;
   }
 
-  @XmlElement(name = "name")
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  @XmlElementWrapper(name = "tags")
-  @XmlElement(name = "tag")
-  public List<Tag> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<Tag> tags) {
-    this.tags = tags;
   }
 }

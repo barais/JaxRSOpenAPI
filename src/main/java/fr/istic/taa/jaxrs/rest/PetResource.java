@@ -1,7 +1,11 @@
 package fr.istic.taa.jaxrs.rest;
 
+import fr.istic.taa.jaxrs.dao.generic.EntityManagerHelper;
 import fr.istic.taa.jaxrs.domain.Pet;
+import fr.istic.taa.jaxrs.domain.User;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -18,21 +22,34 @@ public class PetResource {
   @Path("/{petId}")
   public Pet getPetById(@PathParam("petId") Long petId)  {
       // return pet
-      return new Pet();
+    EntityManager manager = EntityManagerHelper.getEntityManager();
+    EntityTransaction tx = manager.getTransaction();
+    tx.begin();
+    Pet pet = new Pet();
+    manager.persist(pet);
+    tx.commit();
+    return new Pet();
   }
 
-  @GET
-  @Path("/")
-  public Pet getPet(Long petId)  {
-      return new Pet();
-  }
-
-  
   @POST
   @Consumes("application/json")
   public Response addPet(
       @Parameter(description = "Pet object that needs to be added to the store", required = true) Pet pet) {
     // add pet
+    return Response.ok().entity("SUCCESS").build();
+  }
+  @POST
+  @Path("/new_pet")
+  public Response newPet() {
+    EntityManager manager = EntityManagerHelper.getEntityManager();
+    EntityTransaction tx = manager.getTransaction();
+    tx.begin();
+    Pet pet = new Pet();
+    // Configurer les données du nouveau pet si nécessaire
+    manager.persist(pet);
+    User user = new User();
+    manager.persist(user);
+    tx.commit();
     return Response.ok().entity("SUCCESS").build();
   }
 }
