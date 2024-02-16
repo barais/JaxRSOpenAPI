@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Entity
-@XmlRootElement(name = "Pet")
+@XmlRootElement(name = "Status")
 public class Status implements Serializable {
 
     @Id
@@ -19,21 +19,21 @@ public class Status implements Serializable {
     private int id;
 
     @XmlAttribute
-    private String userStatus;
+    private String statusString;
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets = new ArrayList<>();
 
     public Status() {
-        this.userStatus = "OPEN";
+        this.statusString = "OPEN";
     }
 
     public void setUserStatus(String userStatus) {
-        this.userStatus = userStatus;
+        this.statusString = userStatus;
     }
 
     public String getUserStatus() {
-        return userStatus;
+        return statusString;
     }
 
     public void setTickets(Ticket ticket) {

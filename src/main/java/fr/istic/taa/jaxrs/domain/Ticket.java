@@ -1,36 +1,49 @@
 package fr.istic.taa.jaxrs.domain;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@XmlRootElement(name = "Ticket")
+
 public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlAttribute
     private Long id;
+    @XmlAttribute
+
     private String name;
+    @XmlAttribute
+
     private String description;
 
+    @XmlAttribute
     @ManyToOne
     private Status status;
 
+    @XmlElement
     @ManyToOne
     private User user;
 
+    @XmlElement
     @ManyToMany(mappedBy = "ticketList")
     private List<Tag> tagList = new ArrayList<>();
-
-    public Ticket() {
-    }
 
     public Ticket(String name, String description, Status status, User user) {
         this.name = name;
         this.description = description;
         this.status = status;
         this.user = user;
+    }
+
+    public Ticket() {
     }
 
     public Long getId() {

@@ -1,18 +1,26 @@
 package fr.istic.taa.jaxrs.domain;
 
 import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@XmlRootElement(name = "Tag")
 public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlAttribute
     private Long id;
+
+    @XmlAttribute
     private String name;
 
+    @XmlElement
     @ManyToMany
     @JoinTable(name = "tag_list")
     private List<Ticket> ticketList = new ArrayList<>();

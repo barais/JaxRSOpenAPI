@@ -2,6 +2,7 @@ package fr.istic.taa.jaxrs.domain;
 
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -26,8 +27,18 @@ public class User implements Serializable {
 
     private String password;
 
+    @XmlElement
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Ticket> tickets = new ArrayList<>();
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
