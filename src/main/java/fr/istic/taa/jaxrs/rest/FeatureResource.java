@@ -1,10 +1,7 @@
 package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.dao.FeatureDAO;
-import fr.istic.taa.jaxrs.dao.StatusDAO;
 import fr.istic.taa.jaxrs.domain.Feature;
-import fr.istic.taa.jaxrs.domain.Status;
-import fr.istic.taa.jaxrs.domain.Ticket;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 

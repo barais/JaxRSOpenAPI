@@ -2,7 +2,6 @@ package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.User;
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
@@ -18,7 +17,7 @@ public class UserResource {
     @Path("/new")
     public Response newUser() {
         try {
-            User user = new User("UserTest","usertest@gmail.com","passwordtest");
+            User user = new User("UserTest", "usertest@gmail.com", "passwordtest");
             userDAO.save(user);
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
