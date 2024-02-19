@@ -1,7 +1,9 @@
 package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.dao.TicketDAO;
+import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.Ticket;
+import fr.istic.taa.jaxrs.domain.User;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
@@ -18,7 +20,12 @@ public class TicketResource {
     public Response newTicket() {
         try {
             Ticket ticket = new Ticket();
+            UserDAO userDAO = new UserDAO();
+            User user = userDAO.findOne(1L);
+            ticket.setUser(user);
+            user.setTicket(ticket);
             ticketDAO.save(ticket);
+            userDAO.update(user);
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

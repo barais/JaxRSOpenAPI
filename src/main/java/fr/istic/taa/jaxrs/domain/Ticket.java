@@ -1,5 +1,7 @@
 package fr.istic.taa.jaxrs.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -30,6 +32,7 @@ public class Ticket implements Serializable {
 
     @XmlElement
     @ManyToOne
+    @JsonIgnoreProperties("tickets") // Ignorer la sérialisation de la liste des tickets de l'utilisateur pour éviter la récursion infinie
     private User user;
 
     @XmlElement
