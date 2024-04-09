@@ -3,6 +3,7 @@ package fr.istic.taa.jaxrs.rest;
 import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.User;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Collections;
@@ -12,6 +13,32 @@ import java.util.List;
 @Produces({"application/json", "application/xml"})
 public class UserResource {
     private UserDAO userDAO = new UserDAO();
+
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(String content) {
+        try {
+            System.out.println(content);
+            System.out.println("-----------------------------");
+
+
+            // Vérifier si l'utilisateur existe dans la base de données en utilisant email et mot de passe
+            User user = userDAO.findByEmailAndPassword(content, content);
+            if (user != null) {
+                // L'utilisateur est authentifié avec succès
+                return Response.ok().entity("SUCCESS").build();
+            } else {
+                // Les informations d'identification sont incorrectes
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity("Identifiants incorrects").build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erreur lors de la connexion : " + e.getMessage()).build();
+        }
+    }
 
     @POST
     @Path("/new")
