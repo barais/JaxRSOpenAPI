@@ -2,17 +2,27 @@ package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.User;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+
 
 @Path("user")
 @Produces({"application/json", "application/xml"})
 public class UserResource {
     private UserDAO userDAO = new UserDAO();
+    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
 
     @POST
     @Path("/login")
@@ -20,17 +30,27 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(String content) {
         try {
-            System.out.println(content);
-            System.out.println("-----------------------------");
-
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(content);
+            String email = (String) jsonObject.get("email");
+            String password = (String) jsonObject.get("password");
 
             // Vérifier si l'utilisateur existe dans la base de données en utilisant email et mot de passe
-            User user = userDAO.findByEmailAndPassword(content, content);
+            User user = userDAO.findByEmailAndPassword(email, password);
             if (user != null) {
-                // L'utilisateur est authentifié avec succès
-                return Response.ok().entity("SUCCESS").build();
+                // Générer un jeton JWT
+                String token = Jwts.builder()
+                        .setSubject(user.getId().toString()) // Utiliser l'ID de l'utilisateur comme sujet du jeton
+                        .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // Expire dans 24 heures
+                        .signWith(SECRET_KEY, SignatureAlgorithm.HS512)
+                        .compact();
+
+                // Retourner le jeton JWT dans la réponse
+                JSONObject responseJson = new JSONObject();
+                responseJson.put("message", "SUCCESS");
+                responseJson.put("token", token);
+                return Response.ok().entity(responseJson.toJSONString()).build();
             } else {
-                // Les informations d'identification sont incorrectes
                 return Response.status(Response.Status.UNAUTHORIZED)
                         .entity("Identifiants incorrects").build();
             }
