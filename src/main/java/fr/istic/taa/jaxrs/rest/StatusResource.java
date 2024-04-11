@@ -33,13 +33,6 @@ public class StatusResource {
     @Path("/all")
     public List<Status> getAllStatus() {
         try {
-//            List<Status> content = statusDAO.findAll();
-//            JSONParser parser = new JSONParser();
-//            JSONObject jsonObject = (JSONObject) parser.parse(statusDAO.findAll().toString());
-//            System.out.println("test");
-            //String email = (String) jsonObject.get("email");
-            //String password = (String) jsonObject.get("password");
-
             return statusDAO.findAll();
         } catch (Exception e) {
             // Log the exception for debugging purposes
