@@ -39,4 +39,8 @@ public class Status implements Serializable {
     public void setTickets(Ticket ticket) {
         this.tickets.add(ticket);
     }
+
+    public int getId() {
+        return id;
+    }
 }

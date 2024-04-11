@@ -3,7 +3,10 @@ package fr.istic.taa.jaxrs.rest;
 import fr.istic.taa.jaxrs.dao.StatusDAO;
 import fr.istic.taa.jaxrs.domain.Status;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +33,13 @@ public class StatusResource {
     @Path("/all")
     public List<Status> getAllStatus() {
         try {
+//            List<Status> content = statusDAO.findAll();
+//            JSONParser parser = new JSONParser();
+//            JSONObject jsonObject = (JSONObject) parser.parse(statusDAO.findAll().toString());
+//            System.out.println("test");
+            //String email = (String) jsonObject.get("email");
+            //String password = (String) jsonObject.get("password");
+
             return statusDAO.findAll();
         } catch (Exception e) {
             // Log the exception for debugging purposes
