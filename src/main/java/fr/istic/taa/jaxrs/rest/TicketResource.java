@@ -1,11 +1,15 @@
 package fr.istic.taa.jaxrs.rest;
 
+import fr.istic.taa.jaxrs.dao.StatusDAO;
 import fr.istic.taa.jaxrs.dao.TicketDAO;
 import fr.istic.taa.jaxrs.dao.UserDAO;
+import fr.istic.taa.jaxrs.domain.Status;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.User;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,15 +21,32 @@ public class TicketResource {
 
     @POST
     @Path("/new")
-    public Response newTicket() {
+    public Response newTicket(String content) {
         try {
-            Ticket ticket = new Ticket();
-            UserDAO userDAO = new UserDAO();
-            User user = userDAO.findOne(1L);
-            ticket.setUser(user);
-            user.setTicket(ticket);
-            ticketDAO.save(ticket);
-            userDAO.update(user);
+            //TODO finish this !!
+            System.out.println(content);
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(content);
+
+            // Extrait l'objet Ticket du JSON
+            JSONObject ticketObject = (JSONObject) jsonObject.get("Ticket");
+
+            // Maintenant, ticketObject contient les données du ticket
+            System.out.println(ticketObject);
+            String titreTicket = (String) ticketObject.get("titreTicket");
+            String userTicket = (String) ticketObject.get("userTicket");
+            String typeTicket = (String) ticketObject.get("typeTicket");
+            String statusTicket = (String) ticketObject.get("statusTicket");
+            String descriptionTicket = (String) ticketObject.get("descriptionTicket");
+
+            System.out.println(titreTicket);
+
+            StatusDAO statusDAO = new StatusDAO();
+
+            Status status = statusDAO.findOne(Long.parseLong(statusTicket));
+            System.out.println(status.getUserStatus());
+            System.out.println("------------------");
+
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
