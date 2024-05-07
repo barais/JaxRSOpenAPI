@@ -1,9 +1,17 @@
 package fr.istic.taa.jaxrs.rest;
 
 import fr.istic.taa.jaxrs.dao.BugDAO;
+import fr.istic.taa.jaxrs.dao.StatusDAO;
+import fr.istic.taa.jaxrs.dao.TicketDAO;
+import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.Bug;
+import fr.istic.taa.jaxrs.domain.Status;
+import fr.istic.taa.jaxrs.domain.Ticket;
+import fr.istic.taa.jaxrs.domain.User;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.Collections;
 import java.util.List;
@@ -15,14 +23,30 @@ public class BugResource {
 
     @POST
     @Path("/new")
-    public Response newBug() {
+    public Response newBug(String content) {
         try {
-            Bug Bug = new Bug();
-            BugDAO.save(Bug);
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(content);
+
+            JSONObject ticketObject = (JSONObject) jsonObject.get("Ticket");
+
+            String titreTicket = (String) ticketObject.get("titreTicket");
+            String userTicket = (String) ticketObject.get("userTicket");
+            String statusTicket = (String) ticketObject.get("statusTicket");
+            String descriptionTicket = (String) ticketObject.get("descriptionTicket");
+
+            UserDAO userDAO = new UserDAO();
+            StatusDAO statusDAO = new StatusDAO();
+            BugDAO bugDAO = new BugDAO();
+
+            User user = userDAO.findOne(Long.parseLong(userTicket));
+            Status status = statusDAO.findOne(Long.parseLong(statusTicket));
+            Bug bug = new Bug(titreTicket,descriptionTicket,status,user);
+            bugDAO.save(bug);
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Failed to create new Bug: " + e.getMessage()).build();
+                    .entity("Failed to create new ticket: " + e.getMessage()).build();
         }
     }
 

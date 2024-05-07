@@ -23,30 +23,24 @@ public class TicketResource {
     @Path("/new")
     public Response newTicket(String content) {
         try {
-            //TODO finish this !!
-            System.out.println(content);
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(content);
 
-            // Extrait l'objet Ticket du JSON
             JSONObject ticketObject = (JSONObject) jsonObject.get("Ticket");
 
-            // Maintenant, ticketObject contient les données du ticket
-            System.out.println(ticketObject);
             String titreTicket = (String) ticketObject.get("titreTicket");
             String userTicket = (String) ticketObject.get("userTicket");
-            String typeTicket = (String) ticketObject.get("typeTicket");
             String statusTicket = (String) ticketObject.get("statusTicket");
             String descriptionTicket = (String) ticketObject.get("descriptionTicket");
 
-            System.out.println(titreTicket);
-
+            UserDAO userDAO = new UserDAO();
             StatusDAO statusDAO = new StatusDAO();
+            TicketDAO ticketDAO = new TicketDAO();
 
+            User user = userDAO.findOne(Long.parseLong(userTicket));
             Status status = statusDAO.findOne(Long.parseLong(statusTicket));
-            System.out.println(status.getUserStatus());
-            System.out.println("------------------");
-
+            Ticket ticket = new Ticket(titreTicket,descriptionTicket,status,user);
+            ticketDAO.save(ticket);
             return Response.ok().entity("SUCCESS").build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
