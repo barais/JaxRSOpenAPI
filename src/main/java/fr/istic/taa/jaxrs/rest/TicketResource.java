@@ -6,6 +6,7 @@ import fr.istic.taa.jaxrs.dao.UserDAO;
 import fr.istic.taa.jaxrs.domain.Status;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.User;
+import io.swagger.v3.core.util.Json;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.json.simple.JSONObject;
@@ -21,17 +22,12 @@ public class TicketResource {
 
     @POST
     @Path("/new")
-    public Response newTicket(String content) {
+    public Response newTicket(JSONObject content) {
         try {
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(content);
-
-            JSONObject ticketObject = (JSONObject) jsonObject.get("Ticket");
-
-            String titreTicket = (String) ticketObject.get("titreTicket");
-            String userTicket = (String) ticketObject.get("userTicket");
-            String statusTicket = (String) ticketObject.get("statusTicket");
-            String descriptionTicket = (String) ticketObject.get("descriptionTicket");
+            String titreTicket = (String) content.get("titreTicket");
+            String userTicket = (String) content.get("userTicket");
+            String statusTicket = (String) content.get("statusTicket");
+            String descriptionTicket = (String) content.get("descriptionTicket");
 
             UserDAO userDAO = new UserDAO();
             StatusDAO statusDAO = new StatusDAO();
@@ -41,7 +37,9 @@ public class TicketResource {
             Status status = statusDAO.findOne(Long.parseLong(statusTicket));
             Ticket ticket = new Ticket(titreTicket,descriptionTicket,status,user);
             ticketDAO.save(ticket);
-            return Response.ok().entity("SUCCESS").build();
+            JSONObject responseJson = new JSONObject();
+            responseJson.put("message", "SUCCESS");
+            return Response.ok().entity(responseJson.toJSONString()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Failed to create new ticket: " + e.getMessage()).build();
