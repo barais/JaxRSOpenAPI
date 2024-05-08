@@ -7,6 +7,7 @@ import fr.istic.taa.jaxrs.domain.Status;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.User;
 import io.swagger.v3.core.util.Json;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.json.simple.JSONObject;
@@ -91,10 +92,17 @@ public class TicketResource {
                 return Response.status(Response.Status.NOT_FOUND).entity("Ticket not found").build();
             }
             ticketDAO.delete(ticket);
-            return Response.ok().entity("Ticket deleted successfully").build();
+            JSONObject responseJson = new JSONObject();
+            responseJson.put("message", "SUCCESS");
+            return Response.ok().entity(responseJson.toJSONString()).build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Bug not found: " + e.getMessage())
+                    .build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Failed to delete Ticket: " + e.getMessage()).build();
+                    .entity("Failed to delete bug: " + e.getMessage())
+                    .build();
         }
     }
 }

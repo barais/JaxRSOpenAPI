@@ -9,6 +9,7 @@ import fr.istic.taa.jaxrs.domain.Status;
 import fr.istic.taa.jaxrs.domain.Ticket;
 import fr.istic.taa.jaxrs.domain.User;
 import io.swagger.v3.core.util.Json;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Path("bug")
+@Produces({"application/json", "application/xml"})
 public class BugResource {
     private BugDAO BugDAO = new BugDAO();
 
@@ -89,15 +91,24 @@ public class BugResource {
     @Path("/{idBug}")
     public Response deleteBug(@PathParam("idBug") Long idBug) {
         try {
-            Bug Bug = BugDAO.findOne(idBug);
-            if (Bug == null) {
-                return Response.status(Response.Status.NOT_FOUND).entity("Bug not found").build();
+            Bug bug = BugDAO.findOne(idBug);
+            if (bug == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Bug not found")
+                        .build();
             }
-            BugDAO.delete(Bug);
-            return Response.ok().entity("Bug deleted successfully").build();
+            BugDAO.delete(bug);
+            JSONObject responseJson = new JSONObject();
+            responseJson.put("message", "SUCCESS");
+            return Response.ok().entity(responseJson.toJSONString()).build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Bug not found: " + e.getMessage())
+                    .build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Failed to delete Bug: " + e.getMessage()).build();
+                    .entity("Failed to delete bug: " + e.getMessage())
+                    .build();
         }
     }
 }
