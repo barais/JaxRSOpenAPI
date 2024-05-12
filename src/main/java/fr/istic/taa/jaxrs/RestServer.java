@@ -7,13 +7,12 @@ import java.util.logging.Logger;
 
 /**
  * RESTfull microservice, based on JAX-RS and JBoss Undertow
- *
  */
 public class RestServer {
 
     private static final Logger logger = Logger.getLogger(RestServer.class.getName());
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
 
         UndertowJaxrsServer ut = new UndertowJaxrsServer();
 
@@ -23,7 +22,7 @@ public class RestServer {
 
         ut.start(
                 Undertow.builder()
-                        .addHttpListener(8080, "localhost")
+                        .addHttpListener(8090, "localhost")
 
         );
 
