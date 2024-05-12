@@ -20,6 +20,8 @@ import java.util.List;
 @Produces({"application/json", "application/xml"})
 public class TicketResource {
     private TicketDAO ticketDAO = new TicketDAO();
+    private UserDAO userDAO = new UserDAO();
+    private StatusDAO statusDAO = new StatusDAO();
 
     @POST
     @Path("/new")
@@ -103,6 +105,32 @@ public class TicketResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Failed to delete bug: " + e.getMessage())
                     .build();
+        }
+    }
+
+    @PUT
+    @Path("/update")
+    public Ticket updateTicketById(JSONObject content) {
+        try {
+            System.out.println(content);
+
+            String idTicket = (String) content.get("idTicket");
+            String titreTicket = (String) content.get("titreTicket");
+            String userTicket = (String) content.get("userTicket");
+            String statusTicket = (String) content.get("statusTicket");
+            String descriptionTicket = (String) content.get("descriptionTicket");
+            Ticket ticket = ticketDAO.findOne(Long.parseLong(idTicket));
+            User user = userDAO.findOne(Long.parseLong(userTicket));
+            Status status = statusDAO.findOne(Long.parseLong(statusTicket));
+            ticket.setName(titreTicket);
+            ticket.setUser(user);
+            ticket.setStatus(status);
+            ticket.setDescription(descriptionTicket);
+            ticketDAO.update(ticket);
+            return ticketDAO.findOne(1L);
+        } catch (Exception e) {
+            // Return null or handle the exception as per your application's logic
+            return null;
         }
     }
 }

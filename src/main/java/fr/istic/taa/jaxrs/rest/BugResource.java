@@ -80,6 +80,8 @@ public class BugResource {
     @Path("/{idBug}")
     public Bug getStatusById(@PathParam("idBug") Long idBug) {
         try {
+            BugDAO BugDAO = new BugDAO();
+            BugDAO.findOne(idBug);
             return BugDAO.findOne(idBug);
         } catch (Exception e) {
             // Return null or handle the exception as per your application's logic
