@@ -4,47 +4,77 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class EntityManagerHelper {
+public final class EntityManagerHelper {
 
-	private static final EntityManagerFactory emf;
-	private static final ThreadLocal<EntityManager> threadLocal;
+    /**
+     * EntityManagerFactory.
+     */
+    private static final EntityManagerFactory EMF;
 
-	static {
-		emf = Persistence.createEntityManagerFactory("dev");
-		threadLocal = new ThreadLocal<EntityManager>();
-	}
+    /**
+     * ThreadLocal EntityManager.
+     */
+    private static final ThreadLocal<EntityManager> THREADLOCAL;
 
-	public static EntityManager getEntityManager() {
-		EntityManager em = threadLocal.get();
+    static {
+        EMF = Persistence.createEntityManagerFactory("dev");
+        THREADLOCAL = new ThreadLocal<>();
+    }
 
-		if (em == null) {
-			em = emf.createEntityManager();
-			threadLocal.set(em);
-		}
-		return em;
-	}
+    private EntityManagerHelper() {
 
-	public static void closeEntityManager() {
-		EntityManager em = threadLocal.get();
-		if (em != null) {
-			em.close();
-			threadLocal.set(null);
-		}
-	}
+    }
 
-	public static void closeEntityManagerFactory() {
-		emf.close();
-	}
+    /**
+     * Function to get EntityManager.
+     * @return EntityManager
+     */
+    static EntityManager getEntityManager() {
+        EntityManager em = THREADLOCAL.get();
 
-	public static void beginTransaction() {
-		getEntityManager().getTransaction().begin();
-	}
+        if (em == null) {
+            em = EMF.createEntityManager();
+            THREADLOCAL.set(em);
+        }
+        return em;
+    }
 
-	public static void rollback() {
-		getEntityManager().getTransaction().rollback();
-	}
+    /**
+     * Function to close EntityManager.
+     */
+    public static void closeEntityManager() {
+        EntityManager em = THREADLOCAL.get();
+        if (em != null) {
+            em.close();
+            THREADLOCAL.remove();
+        }
+    }
 
-	public static void commit() {
-		getEntityManager().getTransaction().commit();
-	}
+    /**
+     * Function to close EntityManagerFactory.
+     */
+    public static void closeEntityManagerFactory() {
+        EMF.close();
+    }
+
+    /**
+     * Function to begin transaction.
+     */
+    public static void beginTransaction() {
+        getEntityManager().getTransaction().begin();
+    }
+
+    /**
+     * Function to commit transaction.
+     */
+    public static void rollback() {
+        getEntityManager().getTransaction().rollback();
+    }
+
+    /**
+     * Function to commit transaction.
+     */
+    public static void commit() {
+        getEntityManager().getTransaction().commit();
+    }
 }

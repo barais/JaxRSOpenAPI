@@ -19,24 +19,33 @@ package fr.istic.taa.jaxrs;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.istic.taa.jaxrs.rest.PetResource;
+import fr.istic.taa.jaxrs.rest.*;
+import fr.istic.taa.jaxrs.utils.JwtFilter;
+import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/")
-public class TestApplication extends Application {
-	
+@OpenAPIDefinition(info = @Info(title = "Evenement API", version = "1.0", description = "Evenement API"))
+public final class TestApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
 
-        final Set<Class<?>> clazzes = new HashSet<Class<?>>();
-
+        final Set<Class<?>> clazzes = new HashSet<>();
+        clazzes.add(SwaggerResource.class);
         clazzes.add(OpenApiResource.class);
-        clazzes.add(PetResource.class);
-//        clazzes.add(AcceptHeaderOpenApiResource.class);
-         
+        clazzes.add(AcceptHeaderOpenApiResource.class);
+        clazzes.add(UtilisateurRessource.class);
+        clazzes.add(EvenementRessources.class);
+        clazzes.add(OrganisateurRessources.class);
+        clazzes.add(TicketRessources.class);
+        clazzes.add(CorsFilter.class);
+        clazzes.add(JwtFilter.class);
+
 
         return clazzes;
     }
