@@ -1,149 +1,271 @@
-## JaxRS + openAPI
+# 🎵 Stagely — Billetterie de Concerts
 
-1. Import this project in your IDE, 
-2. Start the database
-3. Start the database viewer
-4. Start the backend. There is a main class to start the backend
+Plateforme de billetterie de concerts permettant aux utilisateurs de rechercher, consulter et acheter des tickets, aux organisateurs de gérer leurs événements, et aux administrateurs de valider et modérer les contenus.
 
+---
 
+## 🎬 Démo
 
+▶️ [Voir la démo sur Google Drive](https://drive.google.com/file/d/1d064biE2iS1UYH3rhWBccb9QUndaaVQS/view)
 
-# Task Open API Integration 
+---
 
-Now, we would like to ensure that our API can be discovered. The OpenAPI Initiative (OAI) was created by a consortium of forward-looking industry experts who recognize the immense value of standardizing on how REST APIs are described. As an open governance structure under the Linux Foundation, the OAI is focused on creating, evolving and promoting a vendor neutral description format. 
+## 🤖 Utilisation de l'IA
 
-APIs form the connecting glue between modern applications. Nearly every application uses APIs to connect with corporate data sources, third party data services or other applications. Creating an open description format for API services that is vendor neutral, portable and open is critical to accelerating the vision of a truly connected world.
+Le style et le design de l'interface utilisateur ont été en partie générés et affinés à l'aide de **Claude (Anthropic)**. L'IA a été utilisée pour :
 
-To do this integration first, I already add a dependencies to openAPI libraries. 
+- Générer les feuilles de style CSS des composants (user-list, artist-list, organizer-list, admin-dashboard, formulaires...)
+- Assurer la cohérence visuelle entre les pages (palette de couleurs, typographie, espacements)
+- Rendre les interfaces responsives (media queries, transformation des tableaux en cards sur mobile)
+- Suggérer et implémenter des patterns de design (badges de statut, cards de navigation, tableaux stylisés)
 
-```xml
-		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-jaxrs2-jakarta</artifactId>
-			<version>2.2.15</version>
-		</dependency>
+---
 
-		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-jaxrs2-servlet-initializer-v2</artifactId>
-			<version>2.2.15</version>
-		</dependency>
+## 📋 Modèle Métier
+
+### Diagramme de classes
+
+![Diagramme de classes](diag-de-classe.png)
+
+### Entités principales
+
+| Entité | Description |
+|--------|-------------|
+| `Person` | Classe abstraite parente (héritage SINGLE_TABLE) |
+| `User` | Utilisateur / acheteur de tickets |
+| `Admin` | Administrateur de la plateforme |
+| `Artist` | Artiste musical |
+| `Organizer` | Organisateur d'événements |
+| `Concert` | Événement musical |
+| `Ticket` | Billet d'entrée (lié au concert, sans relation directe User — utilise `buyerEmail`) |
+| `Notification` | Alerte liée à un concert |
+| `AdminStats` | DTO de statistiques globales |
+
+### Relations
+- `Person` → héritage `SINGLE_TABLE` avec discriminateur `Type`
+- `Concert` → `Ticket` : OneToMany (`@JsonIgnore` sur tickets)
+- `Concert` → `Artist` : ManyToMany (bidirectionnel)
+- `Concert` → `Notification` : OneToMany
+- `Concert` → `Admin` : ManyToOne
+- `Concert` → `Organizer` : ManyToOne (`@JsonIgnore` côté Organizer)
+- `Ticket` → `Concert` : ManyToOne (sans relation User — utilise `buyerEmail` et `transferorEmail`)
+
+---
+
+## 🚀 Lancement du projet
+
+### Prérequis
+- Java 17+
+- Maven
+- Node.js 18+
+- Angular CLI
+
+### Backend (JAX-RS)
+
+```bash
+# 1. Démarrer le serveur HSQLDB
+cd JaxRSOpenAPI/data
+java -cp ../target/dependency/hsqldb-2.7.2.jar org.hsqldb.Server
+
+# 2. Initialiser les données (première fois)
+# Lancer JpaTest depuis IntelliJ
+
+# 3. Démarrer le serveur REST
+# Lancer RestServer depuis IntelliJ
+# → http://localhost:8080
 ```
 
-Next you have to add OpenAPI Resource to your application
+### Frontend (Angular)
 
-Your application could be something like that. 
+```bash
+cd BilleterieFrontend
+npm install
+ng serve
+# → http://localhost:4200
+```
 
+---
+
+## 🌐 Endpoints API REST
+
+### 👤 Users `/api/users`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/users/` | Liste tous les utilisateurs |
+| GET | `/users/{id}` | Détails d'un utilisateur |
+| POST | `/users/` | Créer un utilisateur |
+| PUT | `/users/{id}` | Modifier un utilisateur |
+| DELETE | `/users/{id}` | Supprimer un utilisateur |
+
+### 🎤 Artists `/api/artists`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/artists/` | Liste tous les artistes |
+| GET | `/artists/{id}` | Détails d'un artiste |
+| POST | `/artists/` | Créer un artiste |
+| PUT | `/artists/{id}` | Modifier un artiste |
+| DELETE | `/artists/{id}` | Supprimer un artiste |
+
+### 🎪 Organizers `/api/organizers`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/organizers/` | Liste tous les organisateurs |
+| GET | `/organizers/{id}` | Détails d'un organisateur |
+| POST | `/organizers/` | Créer un organisateur |
+| PUT | `/organizers/{id}` | Modifier un organisateur |
+| DELETE | `/organizers/{id}` | Supprimer un organisateur |
+
+### 🔧 Admins `/api/admins`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/admins/` | Liste tous les admins |
+| GET | `/admins/{id}` | Détails d'un admin |
+| POST | `/admins/` | Créer un admin |
+| PUT | `/admins/{id}` | Modifier un admin |
+| DELETE | `/admins/{id}` | Supprimer un admin |
+
+### 🎵 Concerts `/api/concerts`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/concerts/` | Liste tous les concerts |
+| GET | `/concerts/{id}` | Détails d'un concert |
+| POST | `/concerts/` | Créer un concert |
+| PUT | `/concerts/{id}` | Modifier un concert |
+| DELETE | `/concerts/{id}` | Supprimer un concert |
+| GET | `/concerts/search?q=` | Recherche par artiste, lieu, nom, genre |
+| GET | `/concerts/location?q=` | Filtrer par lieu |
+| GET | `/concerts/validated` | Concerts validés uniquement |
+| GET | `/concerts/maxprice?price=` | Filtrer par prix maximum |
+| GET | `/concerts/sortByPopularity` | Trier par popularité |
+| GET | `/concerts/sortByPrice` | Trier par prix |
+| GET | `/concerts/sortByDate` | Trier par date |
+| GET | `/concerts/date?q=` | Rechercher par date |
+
+### 🎟️ Tickets `/api/tickets`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/tickets/` | Liste tous les tickets |
+| GET | `/tickets/{id}` | Détails d'un ticket |
+| DELETE | `/tickets/{id}` | Supprimer un ticket |
+| POST | `/tickets/buy` | Acheter un ticket |
+| GET | `/tickets/user/{userId}` | Tickets d'un utilisateur |
+| PUT | `/tickets/{id}/cancel` | Annuler un ticket |
+| PUT | `/tickets/{id}/refund` | Rembourser un ticket |
+| PUT | `/tickets/{id}/transfer` | Transférer un ticket |
+
+### 🔔 Notifications `/api/notifications`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/notifications/` | Liste toutes les notifications |
+| GET | `/notifications/{id}` | Détails d'une notification |
+| DELETE | `/notifications/{id}` | Supprimer une notification |
+
+### 📊 Stats `/api/stats`
+| Méthode | URL | Description |
+|---------|-----|-------------|
+| GET | `/stats/` | Statistiques globales (concerts, users, artistes, organisateurs, tickets) |
+
+---
+
+## 🎨 Frontend — Graphe de Navigation
+
+```
+/ (Accueil)
+├── /concerts              → Liste des concerts
+│   ├── /concerts/create   → Créer un concert
+│   └── /concerts/:id      → Détail d'un concert + achat ticket
+│
+├── /tickets               → Mes tickets
+│   ├── Annuler un ticket
+│   ├── Rembourser un ticket
+│   └── Transférer un ticket
+│
+├── /admin                 → Tableau de bord admin
+│   └── /admin/concerts    → Gestion et validation des concerts
+│       ├── /users         → Gestion des utilisateurs
+│       ├── /artists       → Gestion des artistes
+│       └── /organizers    → Gestion des organisateurs
+│
+├── /users                 → Liste des utilisateurs
+│   ├── /users/create      → Créer un utilisateur
+│   ├── /users/:id         → Détails d'un utilisateur
+│   └── /users/:id/edit    → Modifier un utilisateur
+│
+├── /artists               → Liste des artistes
+│   ├── /artists/create    → Créer un artiste
+│   ├── /artists/:id       → Détails d'un artiste
+│   └── /artists/:id/edit  → Modifier un artiste
+│
+└── /organizers            → Liste des organisateurs
+    ├── /organizers/create → Créer un organisateur
+    ├── /organizers/:id    → Détails d'un organisateur
+    └── /organizers/:id/edit → Modifier un organisateur
+```
+
+---
+
+## 🗄️ DAO — Requêtes spéciales
+
+### JPQL
 ```java
-@ApplicationPath("/")
-public class RestApplication extends Application {
+// Recherche multi-critères dans ConcertDao
+SELECT DISTINCT c FROM Concert c LEFT JOIN c.artists a
+WHERE LOWER(a.firstname) LIKE :q OR LOWER(c.name) LIKE :q ...
 
-	@Override
-	public Set<Class<?>> getClasses() {
-		final Set<Class<?>> resources = new HashSet<>();
-
-
-		// SWAGGER endpoints
-		resources.add(OpenApiResource.class);
-
-        //Your own resources. 
-        resources.add(PersonResource.class);
-....
-		return resources;
-	}
-}
+// COUNT optimisé pour les stats
+SELECT COUNT(c) FROM Concert c
+SELECT COUNT(p) FROM Person p WHERE TYPE(p) = User
+SELECT COUNT(p) FROM Person p WHERE TYPE(p) = Artist
+SELECT COUNT(p) FROM Person p WHERE TYPE(p) = Organizer
+SELECT COUNT(t) FROM Ticket t
 ```
 
-Next start your server, you must have your api description available at [http://localhost:8080/openapi.json](http://localhost:8080/openapi.json)
-
-### Integrate Swagger UI. 
-
-Next we have to integrate Swagger UI. We will first download it.
-https://github.com/swagger-api/swagger-ui
-
-Copy dist folder content in src/main/webapp/swagger in your project. 
-
-Edit index.html file to automatically load your openapi.json file. 
-
-At the end of the index.html, your must have something like that.
-
-```js
-   // Build a system
-      const ui = SwaggerUIBundle({
-        url: "http://localhost:8080/openapi.json",
-        dom_id: '#swagger-ui',
-        
-        ...
-```
-
-Next add a new resources to create a simple http server when your try to access to http://localhost:8080/api/.
-
-This new resources can be developped as follows
-
+### Requêtes nommées (@NamedQuery)
 ```java
-package app.web.rest;
-
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.util.logging.Logger;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
-@Path("/api")
-public class SwaggerResource {
-
-    private static final Logger logger = Logger.getLogger(SwaggerResource.class.getName());
-
-    @GET
-    public byte[] Get1() {
-        try {
-            return Files.readAllBytes(FileSystems.getDefault().getPath("src/main/webapp/swagger/index.html"));
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-    @GET
-    @Path("{path:.*}")
-    public byte[] Get(@PathParam("path") String path) {
-        try {
-            return Files.readAllBytes(FileSystems.getDefault().getPath("src/main/webapp/swagger/"+path));
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
-}
+Concert.findByLocation           // Concerts par lieu
+Concert.findValidated            // Concerts validés
+Concert.findByDate               // Concerts par date
+Concert.findAllOrderByPopularity // Tri par popularité
+Concert.findAllOrderByPrice      // Tri par prix
+Concert.findAllOrderByDate       // Tri par date
 ```
 
-Add this new resources in your application
-
+### Criteria Query
 ```java
-@ApplicationPath("/")
-public class RestApplication extends Application {
-
-
-	@Override
-	public Set<Class<?>> getClasses() {
-		final Set<Class<?>> resources = new HashSet<>();
-
-
-		// SWAGGER endpoints
-		resources.add(OpenApiResource.class);
-		resources.add(PersonResource.class);
-        //NEW LINE TO ADD
-		resources.add(SwaggerResource.class);
-
-		return resources;
-	}
-}
+// Concerts dont le prix est <= maxPrice
+CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+cq.select(root).where(cb.lessThanOrEqualTo(root.get("price"), maxPrice));
 ```
 
-Restart your server and access to http://localhost:8080/api/, you should access to a swagger ui instance that provides documentation on your api. 
+---
 
-You can follow this guide to show how you can specialise the documentation through annotations.
+## 📚 Documentation OpenAPI
 
-https://github.com/swagger-api/swagger-samples/blob/2.0/java/java-resteasy-appclasses/src/main/java/io/swagger/sample/resource/PetResource.java
+La documentation OpenAPI est disponible sur :
+```
+http://localhost:8080/openapi.json
+```
+
+Visualisable sur [Swagger Editor](https://editor.swagger.io) en important l'URL.
+
+---
+
+## 🛠️ Stack Technique
+
+### Backend
+- Java 26
+- JAX-RS (RESTEasy 6.2)
+- Hibernate 6.2 / JPA 3.1
+- HSQLDB 2.7
+- Undertow 2.3
+- Swagger / OpenAPI 3
+- Jackson (sérialisation JSON)
+
+### Frontend
+- Angular 19
+- Angular Material
+- TypeScript
+- RxJS
+- Proxy Angular (`/api` → `http://localhost:8080`)
+
+---

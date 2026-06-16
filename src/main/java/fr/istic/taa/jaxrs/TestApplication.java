@@ -19,14 +19,14 @@ package fr.istic.taa.jaxrs;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.istic.taa.jaxrs.rest.PetResource;
+import fr.istic.taa.jaxrs.rest.*;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/")
 public class TestApplication extends Application {
-	
+
 
     @Override
     public Set<Class<?>> getClasses() {
@@ -35,8 +35,16 @@ public class TestApplication extends Application {
 
         clazzes.add(OpenApiResource.class);
         clazzes.add(PetResource.class);
-//        clazzes.add(AcceptHeaderOpenApiResource.class);
-         
+        clazzes.add(UserResource.class);
+        clazzes.add(ConcertResource.class);
+        clazzes.add(ArtistResource.class);
+        clazzes.add(OrganizerResource.class);
+        clazzes.add(AdminResource.class);
+        clazzes.add(TicketResource.class);
+        clazzes.add(NotificationResource.class);
+        clazzes.add(AdminStatsResource.class);
+//      clazzes.add(AcceptHeaderOpenApiResource.class);
+
 
         return clazzes;
     }
